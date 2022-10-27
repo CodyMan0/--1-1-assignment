@@ -3,11 +3,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { LoginProvider } from './context/LoginContext';
 import Router from './Router';
+import theme from './styles/theme';
 
 function App() {
   return (
     <LoginProvider>
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Router />
         </BrowserRouter>

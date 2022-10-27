@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import styled from 'styled-components';
 import { setLocalStorage } from '../../utils/localStorage';
+import Layout from '../Layout';
 import Button from './Button';
 import Input from './Input';
+import Title from './Title';
 
 const TOKEN_NAME = 'token';
 
@@ -62,7 +65,6 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (data && data.access_token) {
-      setLocalStorage({ name: TOKEN_NAME, value: data.access_token });
       navigate('/todo');
     }
   }, [data, navigate]);
@@ -77,11 +79,42 @@ const AuthForm = () => {
     password.length < 8;
 
   return (
-    <form>
-      <Input type="email" />
-      <Input type="password" />
-      <Button isSignIn={isSignIn} disabled={disabled} />
-    </form>
+    <Layout>
+      <EnterPageContainer>
+        <Title title="로그인" />
+        <Form>
+          <Input
+            label="이메일"
+            type="text"
+            id="email"
+            placeholder="이메일을 입력해주세요."
+          />
+          <Input
+            label="패스워드"
+            id="password"
+            placeholder="비밀번호 8자리 이상 입력해주세요."
+            type="password"
+          />
+          <Button text="회원가입" />
+        </Form>
+      </EnterPageContainer>
+    </Layout>
   );
 };
 export default AuthForm;
+
+const Form = styled.form`
+  width: 100%;
+`;
+
+export const EnterPageContainer = styled.div`
+  background-color: white;
+  border-radius: ${props => props.theme.borderRadius.md};
+  padding: ${props => props.theme.mp.xxl} ${props => props.theme.mp.sm};
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: ${props => props.theme.shadow.md};
+`;
