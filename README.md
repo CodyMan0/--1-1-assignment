@@ -1,24 +1,25 @@
 # 원티드 프리온보딩 프론트엔드 - Week 1-1
 
-원티드 프리온보딩 **프론트엔드 8팀**의 ```팔팔한 형제들```입니다.<br>
+원티드 프리온보딩 **프론트엔드 8팀**의 `팔팔한 형제들`입니다.<br>
 
 ## 📅 프로젝트 기간
 
 기간 : 2022년 10월 26일 ~ 2022년 10월 27일
 
 ## 팔팔한 형제들 팀 소개
-### FE
-| 이름        | github                           |
-| --------------- |  -------------------------------- |
-| 이주영 (팀장)   | https://github.com/CodyMan0 |
-| 심의석 (부팀장) | https://github.com/shimeeuisuk |
-| 장태희          | https://github.com/jangth0655 |
-| 최영준          | https://github.com/choi2021 |
-| 송경용  (공지)        | https://github.com/strongsongky |
-| 박경은  (서기)       | https://github.com/KellyPark96 |
-| 강효주          |  https://github.com/gywn9708 | 
-| 권용현          |  https://github.com/YongHyunKwon  |
 
+### FE
+
+| 이름            | github                          |
+| --------------- | ------------------------------- |
+| 이주영 (팀장)   | https://github.com/CodyMan0     |
+| 심의석 (부팀장) | https://github.com/shimeeuisuk  |
+| 장태희          | https://github.com/jangth0655   |
+| 최영준          | https://github.com/choi2021     |
+| 송경용 (공지)   | https://github.com/strongsongky |
+| 박경은 (서기)   | https://github.com/KellyPark96  |
+| 강효주          | https://github.com/gywn9708     |
+| 권용현          | https://github.com/YongHyunKwon |
 
 ## 🛠 기술 스택
 
@@ -40,28 +41,31 @@
   <br>
 </div>
 
-
-
-
 ## 🏁 프로젝트 실행 방법
 
 1. root폴더에 .env 파일을 생성합니다.
+
 ```
   REACT_APP_URL=https://pre-onboarding-selection-task.shop
 ```
+
 2. 의존성 패키지를 설치합니다.
+
 ```zsh
 $ npm install
 ```
-3. 리눅스와 윈도우 husky 충돌 방지 후 사용을 위해 설치합니다. 
+
+3. 리눅스와 윈도우 husky 충돌 방지 후 사용을 위해 설치합니다.
+
 ```zsh
-$ chmod ug+x .husky/* 
+$ chmod ug+x .husky/*
 ```
+
 4. 프로젝트를 실행합니다.
+
 ```zsh
 $ npm start
 ```
-
 
 - 현재 repository를 클론한 뒤, 위 순서대로 입력하면 localhost:3000 포트에서 해당 코드가 실행됩니다.
 
@@ -137,19 +141,19 @@ $ npm start
  ┣ 📜App.js
  ┣ 📜index.js
  ┗ 📜router.js
-  ```
+```
+
 </div>
 </details>
-
 
 ## ✨ 주요 기능
 
 - 프로젝트는 크게 로그인, 회원가입 및 todo CRUD 세 가지 기능을 중심으로 간략히 구현하였습니다.
 
 | 페이지             | API 연결 및 기능                                                                                                                                                                                                                                                                                     |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- | ------ | ----------------------------- |
 | 로그인 및 회원가입 | ✅로그인 API<br> ✅회원가입 API<br> ✅서버사이드 유효성 검사(이미 가입된 메일, 가입되지 않은 메일, 잘못된 비밀번호)<br>✅react-hook-form 없이 실시간 유효성 검사<br>✅로그인/회원가입 시 모두 jwt 로컬 스토리지 저장<br> ✅토큰 존재 시 /todo 리다이렉트<br> ✅회원가입 성공 시 /todo 리다이렉트<br> |
-| todo 리스트        | ✅신규 todo 추가 API<br>✅todo 완료여부 따라 필터링<br>✅todo 업데이트(내용 or 완료여부)API<br>✅todo 삭제 API<br>✅토큰 미존재 시 / 리다이렉트<br>                                                                                                                                                  |  | 반응형 | ✅모바일<br>✅태블릿 <br>✅PC |
+| todo 리스트        | ✅신규 todo 추가 API<br>✅todo 완료여부 따라 필터링<br>✅todo 업데이트(내용 or 완료여부)API<br>✅todo 삭제 API<br>✅토큰 미존재 시 / 리다이렉트<br>                                                                                                                                                  |     | 반응형 | ✅모바일<br>✅태블릿 <br>✅PC |
 
 ## 📹 데모 영상
 
@@ -212,20 +216,20 @@ $ npm start
 
 -
 
-
 ## ✏️ 개선 부분
 
-
-### something
-### something
-### something
-### something
 ### something
 
+### something
+
+### something
+
+### something
+
+### something
 
 ## 🗺 API 설계
 
 - 해당 프로젝트는 [wanted 배포 API](https://pre-onboarding-selection-task.shop)를 사용하였습니다.
 - 해당 프로젝트 [API github 주소](https://github.com/walking-sunset/selection-task)를 눌러 이동해보세요!
 - 해당 프로젝트 API에 대한 자세한 설명을 보려면 [API 설명 보러가기](https://github.com/walking-sunset/selection-task#api)로 이동하세요!
-

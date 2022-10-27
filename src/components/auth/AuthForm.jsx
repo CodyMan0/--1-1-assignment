@@ -82,19 +82,22 @@ const AuthForm = () => {
       return;
     }
 
-    if (isSignIn) {
-      await signIn(userInfo);
-    } else {
+    if (!isSignIn) {
       await signUp(userInfo);
+    } else {
+      await signIn(userInfo);
     }
   };
 
+  console.log(signUpError);
   useEffect(() => {
-    if (signUpData && !signUpError) {
+    if (signUpData) {
+      console.log(signInData);
+      console.log(isSignIn);
       setIsSignIn(true);
       handleReset();
     }
-  }, [signUpData]);
+  }, [signUpData, setIsSignIn]);
 
   const handleSwitchAuth = () => {
     setIsSignIn(prev => !prev);
@@ -157,7 +160,7 @@ const AuthForm = () => {
           />
         </Form>
         {errorMessage && <ErrorMessage errorText={errorMessage} />}
-        <button type="button" onClick={handleSwitchAuth}>
+        <button type="submit" onClick={handleSwitchAuth}>
           {isSignIn ? '회원가입' : '로그인'}
         </button>
       </EnterPageContainer>
