@@ -7,8 +7,10 @@ import Input from './Input';
 import Title from './Title';
 import useMutation from '../../utils/hooks/useMutation';
 import { setLocalStorage, TOKEN_NAME } from '../../utils/localStorage';
+import ErrorMessage from './ErrorMessage';
 
 const AuthForm = () => {
+  const navigate = useNavigate();
   const [isSignIn, setIsSignIn] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: '', password: '' });
   const [userError, setUserError] = useState({
@@ -16,7 +18,6 @@ const AuthForm = () => {
     passwordError: '',
   });
   const [networkError, setNetworkError] = useState('');
-
   const [
     signUp,
     { data: signUpData, isLoading: signUpLoading, error: signUpError },
@@ -34,8 +35,8 @@ const AuthForm = () => {
   });
 
   const handleEmail = event => {
+    setNetworkError('');
     setUserError(prev => ({ ...prev, emailError: '' }));
-    setNetworkError(prev => ({ ...prev, networkError: '' }));
     const {
       currentTarget: { value },
     } = event;
@@ -43,12 +44,18 @@ const AuthForm = () => {
   };
 
   const handlePassword = event => {
-    setUserError(prev => ({ ...prev, emailError: '' }));
-    setNetworkError(prev => ({ ...prev, networkError: '' }));
+    setNetworkError('');
+    setUserError(prev => ({ ...prev, passwordError: '' }));
     const {
       currentTarget: { value },
     } = event;
     setUserInfo(prev => ({ ...prev, password: value }));
+  };
+
+  const handleReset = () => {
+    setUserInfo(prev => ({ ...prev, email: '', password: '' }));
+    setUserError(prev => ({ ...prev, emailError: '', passwordError: '' }));
+    setNetworkError('');
   };
 
   const handleSubmit = async (event, isSignIn) => {
@@ -74,44 +81,47 @@ const AuthForm = () => {
       }));
       return;
     }
-    const userObj = {
-      email: userInfo.email,
-      password: userInfo.password,
-    };
 
     if (isSignIn) {
-      await signIn(userObj);
+      await signIn(userInfo);
     } else {
-      await signUp(userObj);
+      await signUp(userInfo);
     }
   };
 
   useEffect(() => {
-    if (signUpData) {
+    if (signUpData && !signUpError) {
       setIsSignIn(true);
-      setUserInfo(prev => ({ ...prev, email: '', password: '' }));
-      setUserError(prev => ({ ...prev, emailError: '', passwordError: '' }));
-      setNetworkError('');
+      handleReset();
     }
   }, [signUpData]);
+
+  const handleSwitchAuth = () => {
+    setIsSignIn(prev => !prev);
+    handleReset();
+  };
 
   useEffect(() => {
     if (signInError) {
       setNetworkError(signInError);
     }
-    if (signUpError) {
-      setNetworkError(signInError);
-    }
   }, [signInError]);
+
+  useEffect(() => {
+    if (signUpError) {
+      setNetworkError(signUpError);
+    }
+  }, [signUpError]);
 
   useEffect(() => {
     if (signInData && signInData.access_token) {
       setLocalStorage({ name: TOKEN_NAME, value: signInData.access_token });
+      navigate('/todo');
     }
   }, [signInData]);
 
   const errorMessage =
-    userError.emailError || userError.passwordError || !networkError;
+    userError.emailError || userError.passwordError || networkError;
 
   const disabled =
     errorMessage ||
@@ -146,7 +156,8 @@ const AuthForm = () => {
             disabled={disabled}
           />
         </Form>
-        <button type="button" onClick={() => setIsSignIn(prev => !prev)}>
+        {errorMessage && <ErrorMessage errorText={errorMessage} />}
+        <button type="button" onClick={handleSwitchAuth}>
           {isSignIn ? '회원가입' : '로그인'}
         </button>
       </EnterPageContainer>

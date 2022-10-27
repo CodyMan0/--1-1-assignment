@@ -13,7 +13,7 @@ const Router = () => {
     } else {
       navigator('/todo');
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <Routes>

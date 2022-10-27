@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Layout from '../components/Layout';
 import TodoForm from '../components/todo/TodoForm';
 import TodoItem from '../components/todo/TodoItem';
+import { useAuth } from '../context/LoginContext';
 import formatDateAndDay from '../utils/formatDayAndDate';
 import useFetch from '../utils/hooks/useFetch';
 import {
@@ -11,39 +13,21 @@ import {
   TOKEN_NAME,
 } from '../utils/localStorage';
 
-const Todos = ({ setIsLoggedIn }) => {
+const Todos = () => {
   const { data, isLoading } = useFetch({ url: '/todos' });
   const [todoList, setTodoList] = useState([]);
-
-  /*  const getTodos = async () => {
-    const token = getLocalStorage({ name: TOKEN_NAME });
-    console.log('token', token);
-    const response = await (
-      await fetch('https://pre-onboarding-selection-task.shop/todos', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-    ).json;
-    console.log(response);
-  }; */
+  const { setIsLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   const onLogout = () => {
     deleteLocalStorage({ name: TOKEN_NAME });
     setIsLoggedIn(false);
+    navigate('/', { replace: true });
   };
 
   useEffect(() => {
     setTodoList(data);
   }, [data]);
-
-  useEffect(() => {
-    const token = getLocalStorage({ name: TOKEN_NAME });
-    if (!token) {
-      setIsLoggedIn(false);
-    }
-  }, [setIsLoggedIn]);
 
   return (
     <Layout>
