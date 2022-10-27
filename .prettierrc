@@ -4,7 +4,7 @@
   "bracketSpacing": true,
   "semi": true,
   "useTabs": false,
-  "arrowParens": "always",
+  "arrowParens": "avoid",
   "printWidth": 80,
   "endOfLine": "lf"
 }

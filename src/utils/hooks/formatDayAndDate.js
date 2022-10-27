@@ -8,7 +8,7 @@ const weekday = [
   '토요일',
 ];
 
-const formatDateAndDay = (dayAndDateString) => {
+const formatDateAndDay = dayAndDateString => {
   const today = new Date(Date.now());
   const formattedDate = today.toLocaleDateString('ko', {
     day: 'numeric',
