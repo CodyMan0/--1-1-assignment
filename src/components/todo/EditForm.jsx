@@ -10,7 +10,7 @@ const EditForm = ({
   isCompleted,
 }) => {
   const [edit, { data: editData, isLoading: editLoading }] = useMutation({
-    url: `todos/${currentTodoId}`,
+    url: `/todos/${currentTodoId}`,
     method: 'PUT',
   });
 

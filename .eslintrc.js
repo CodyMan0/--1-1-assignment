@@ -29,5 +29,6 @@ module.exports = {
     'react/prop-types': 0,
     'no-unused-vars': 0,
     'no-shadow': 0,
+    'react/jsx-props-no-spreading': 0,
   },
 };

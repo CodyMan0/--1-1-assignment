@@ -11,7 +11,7 @@ const TodoItem = ({ id, todo, setTodoList, isCompleted, userId }) => {
   const [editMode, setEditMode] = useState(false);
 
   const [deleteTodo] = useMutation({
-    url: `todos/${id}`,
+    url: `/todos/${id}`,
     method: 'DELETE',
   });
 

@@ -13,7 +13,7 @@ const useFetch = ({ url }) => {
     try {
       setResponse(prev => ({ ...prev, isLoading: true }));
       const results = await (
-        await fetch(`${process.env.REACT_APP_URL}/${url}`, {
+        await fetch(`${process.env.REACT_APP_URL}${url}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,

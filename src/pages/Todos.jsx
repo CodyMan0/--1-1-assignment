@@ -12,8 +12,22 @@ import {
 } from '../utils/localStorage';
 
 const Todos = ({ setIsLoggedIn }) => {
-  const { data, isLoading } = useFetch({ url: 'todos' });
+  const { data, isLoading } = useFetch({ url: '/todos' });
   const [todoList, setTodoList] = useState([]);
+
+  /*  const getTodos = async () => {
+    const token = getLocalStorage({ name: TOKEN_NAME });
+    console.log('token', token);
+    const response = await (
+      await fetch('https://pre-onboarding-selection-task.shop/todos', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    ).json;
+    console.log(response);
+  }; */
 
   const onLogout = () => {
     deleteLocalStorage({ name: TOKEN_NAME });

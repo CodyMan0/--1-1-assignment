@@ -6,7 +6,7 @@ import useMutation from '../../utils/hooks/useMutation';
 const TodoForm = ({ setTodoList }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [submitTodo, { data, isLoading, error }] = useMutation({
-    url: 'todos',
+    url: '/todos',
     method: 'POST',
   });
   const [todo, setTodo] = useState('');
