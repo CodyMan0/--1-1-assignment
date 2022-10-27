@@ -12,7 +12,7 @@ const useMutation = ({ url, method }) => {
       const token = getLocalStorage({ name: TOKEN_NAME });
       setValue(prev => ({ ...prev, isLoading: true }));
       const response = await (
-        await fetch(`${process.env.REACT_APP_URL}/${url}`, {
+        await fetch(`${process.env.REACT_APP_URL}${url}`, {
           method: method.toUpperCase(),
           body: JSON.stringify(data),
           headers: {

@@ -6,96 +6,149 @@ import Button from './Button';
 import Input from './Input';
 import Title from './Title';
 import useMutation from '../../utils/hooks/useMutation';
-import { setLocalStorage } from '../../utils/localStorage';
+import { setLocalStorage, TOKEN_NAME } from '../../utils/localStorage';
 
 const AuthForm = () => {
   const [isSignIn, setIsSignIn] = useState(false);
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [errors, setErrors] = useState('');
-  const [login, { data, isLoading, error }] = useMutation({
-    url: '/',
+  const [userInfo, setUserInfo] = useState({ email: '', password: '' });
+  const [userError, setUserError] = useState({
+    emailError: '',
+    passwordError: '',
+  });
+  const [networkError, setNetworkError] = useState('');
+
+  const [
+    signUp,
+    { data: signUpData, isLoading: signUpLoading, error: signUpError },
+  ] = useMutation({
+    url: '/auth/signup',
+    method: 'POST',
+  });
+
+  const [
+    signIn,
+    { data: signInData, isLoading: signInLoading, error: signInError },
+  ] = useMutation({
+    url: '/auth/signin',
     method: 'POST',
   });
 
   const handleEmail = event => {
-    setEmailError('');
-    setErrors('');
+    setUserError(prev => ({ ...prev, emailError: '' }));
+    setNetworkError(prev => ({ ...prev, networkError: '' }));
     const {
       currentTarget: { value },
     } = event;
-    setEmail(value);
+    setUserInfo(prev => ({ ...prev, email: value }));
   };
 
   const handlePassword = event => {
-    setPasswordError('');
-    setErrors('');
+    setUserError(prev => ({ ...prev, emailError: '' }));
+    setNetworkError(prev => ({ ...prev, networkError: '' }));
     const {
       currentTarget: { value },
     } = event;
-    setPassword(value);
+    setUserInfo(prev => ({ ...prev, password: value }));
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event, isSignIn) => {
     event.preventDefault();
-    if (email === '' || password === '') {
-      setErrors('이메일과 패스워드가 필요합니다.');
+    if (userInfo.email === '' || userInfo.password === '') {
+      setUserError(prev => ({
+        ...prev,
+        emailError: '이메일과 패스워드가 필요합니다.',
+      }));
       return;
     }
-    if (!email.includes('@') || email === '') {
-      setEmailError('이메일 형식으로 입력해주세요.');
+    if (!userInfo.email.includes('@') || userInfo.email === '') {
+      setUserError(prev => ({
+        ...prev,
+        emailError: '이메일 형식으로 입력해주세요.',
+      }));
       return;
     }
-    if (password.length < 8 || password === '') {
-      setPasswordError('비밀번호 8자 이상 입력해주세요.');
+    if (userInfo.password.length < 8 || userInfo.password === '') {
+      setUserError(prev => ({
+        ...prev,
+        passwordError: '비밀번호 8자 이상 입력해주세요.',
+      }));
       return;
     }
-    await login({ email, password });
+    const userObj = {
+      email: userInfo.email,
+      password: userInfo.password,
+    };
+
+    if (isSignIn) {
+      await signIn(userObj);
+    } else {
+      await signUp(userObj);
+    }
   };
 
   useEffect(() => {
-    if (data && error) {
-      setErrors(error);
+    if (signUpData) {
+      setIsSignIn(true);
+      setUserInfo(prev => ({ ...prev, email: '', password: '' }));
+      setUserError(prev => ({ ...prev, emailError: '', passwordError: '' }));
+      setNetworkError('');
     }
-  }, [data, error]);
+  }, [signUpData]);
 
   useEffect(() => {
-    if (data && data.access_token) {
-      navigate('/todo');
+    if (signInError) {
+      setNetworkError(signInError);
     }
-  }, [data, navigate]);
+    if (signUpError) {
+      setNetworkError(signInError);
+    }
+  }, [signInError]);
 
-  const errorMessage = emailError || errors || passwordError;
+  useEffect(() => {
+    if (signInData && signInData.access_token) {
+      setLocalStorage({ name: TOKEN_NAME, value: signInData.access_token });
+    }
+  }, [signInData]);
+
+  const errorMessage =
+    userError.emailError || userError.passwordError || !networkError;
 
   const disabled =
     errorMessage ||
-    email === '' ||
-    !email.includes('@') ||
-    password === '' ||
-    password.length < 8;
+    userInfo.email === '' ||
+    !userInfo.email.includes('@') ||
+    userInfo.password === '' ||
+    userInfo.password.length < 8;
 
   return (
     <Layout>
       <EnterPageContainer>
-        <Title title="로그인" />
-        <Form>
+        <Title title={isSignIn ? '로그인' : '회원가입'} />
+        <Form onSubmit={event => handleSubmit(event, isSignIn)}>
           <Input
             label="이메일"
             type="text"
             id="email"
             placeholder="이메일을 입력해주세요."
+            onChange={handleEmail}
+            value={userInfo.email}
           />
           <Input
             label="패스워드"
             id="password"
             placeholder="비밀번호 8자리 이상 입력해주세요."
             type="password"
+            onChange={handlePassword}
+            value={userInfo.password}
           />
-          <Button text="회원가입" />
+          <Button
+            text={!isSignIn ? '회원가입' : '로그인'}
+            disabled={disabled}
+          />
         </Form>
+        <button type="button" onClick={() => setIsSignIn(prev => !prev)}>
+          {isSignIn ? '회원가입' : '로그인'}
+        </button>
       </EnterPageContainer>
     </Layout>
   );

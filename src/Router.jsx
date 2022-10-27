@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useAuth } from './context/LoginContext';
+import { LoginContext, useAuth } from './context/LoginContext';
 import Auth from './pages/Auth';
 import Todos from './pages/Todos';
 
 const Router = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useContext(LoginContext);
   const navigator = useNavigate();
   useEffect(() => {
     if (!isLoggedIn) {
