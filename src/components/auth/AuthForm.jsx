@@ -89,11 +89,8 @@ const AuthForm = () => {
     }
   };
 
-  console.log(signUpError);
   useEffect(() => {
-    if (signUpData) {
-      console.log(signInData);
-      console.log(isSignIn);
+    if (signUpData && signUpData?.access_token) {
       setIsSignIn(true);
       handleReset();
     }
