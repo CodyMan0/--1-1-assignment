@@ -25,6 +25,7 @@ module.exports = {
     'dot-notation': "error", // 가능하다면 dot notation 사용
     'no-unused-vars': "error", // 사용하지 않는 변수 금지
     'linebreak-style': 0, // CRLF 에러
-    'react/function-component-definition':0 //함수형 컴포넌트 화살표함수사용 가능
+    'react/function-component-definition':0, //함수형 컴포넌트 화살표함수사용 가능
+    'comma-dangle': 0,
   }
 };
