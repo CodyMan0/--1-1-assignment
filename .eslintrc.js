@@ -27,5 +27,6 @@ module.exports = {
     'linebreak-style': 0, // CRLF 에러
     'react/function-component-definition':0, //함수형 컴포넌트 화살표함수사용 가능
     'comma-dangle': 0,
+    'arrow-body-style': 0
   }
 };
