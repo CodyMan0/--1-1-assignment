@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { setLocalStorage } from '../../utils/localStorage';
+import { useNavigate } from 'react-router';
 import Layout from '../Layout';
 import Button from './Button';
 import Input from './Input';
 import Title from './Title';
-
-const TOKEN_NAME = 'token';
+import useMutation from '../../utils/hooks/useMutation';
+import { setLocalStorage } from '../../utils/localStorage';
 
 const AuthForm = () => {
   const [isSignIn, setIsSignIn] = useState(false);
@@ -18,7 +17,7 @@ const AuthForm = () => {
   const [passwordError, setPasswordError] = useState('');
   const [errors, setErrors] = useState('');
   const [login, { data, isLoading, error }] = useMutation({
-    url: 'auth/signin',
+    url: '/',
     method: 'POST',
   });
 

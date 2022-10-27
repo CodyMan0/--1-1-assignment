@@ -1,3 +1,5 @@
+export const TOKEN_NAME = 'token';
+
 export const setLocalStorage = ({ name, value }) => {
   localStorage.setItem(name, value);
 };

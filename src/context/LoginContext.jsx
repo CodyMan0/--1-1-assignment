@@ -5,7 +5,7 @@ import React, {
   useContext,
   useEffect,
 } from 'react';
-import { getLocalStorage } from '../utils/localStorage';
+import { getLocalStorage, TOKEN_NAME } from '../utils/localStorage';
 
 export const LoginContext = createContext();
 
@@ -14,7 +14,7 @@ export const LoginProvider = ({ children }) => {
   const value = useMemo(() => ({ isLoggedIn, setIsLoggedIn }), []);
 
   useEffect(() => {
-    const loggedIn = getLocalStorage();
+    const loggedIn = getLocalStorage({ name: TOKEN_NAME });
     if (loggedIn) {
       setIsLoggedIn(true);
     } else {

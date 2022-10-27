@@ -1,6 +1,37 @@
-import React from 'react';
+import { useState } from 'react';
+import { getLocalStorage, TOKEN_NAME } from '../localStorage';
 
-const useMutation = () => {
-  return <div>useMutation</div>;
+const useMutation = ({ url, method }) => {
+  const [value, setValue] = useState({
+    data: undefined,
+    isLoading: false,
+    error: undefined,
+  });
+  const mutation = async data => {
+    try {
+      const token = getLocalStorage({ name: TOKEN_NAME });
+      setValue(prev => ({ ...prev, isLoading: true }));
+      const response = await (
+        await fetch(`${process.env.REACT_APP_URL}/${url}`, {
+          method: method.toUpperCase(),
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token || null}`,
+          },
+        })
+      ).json();
+      if (response.message) {
+        setValue(prev => ({ ...prev, error: response.message }));
+      }
+      setValue(prev => ({ ...prev, data: response }));
+    } catch (error) {
+      setValue(prev => ({ ...prev, error }));
+    } finally {
+      setValue(prev => ({ ...prev, isLoading: false }));
+    }
+  };
+
+  return [mutation, { ...value }];
 };
 export default useMutation;
